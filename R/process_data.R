@@ -9,7 +9,11 @@
 
 process_data <- function(data){
   require(tidyverse)
-  
-  d = do.call(cbind.data.frame, data$report$food)[,c("ndbno","name","nutrients.name","nutrients.value")]
-  spread(d,key=nutrients.name,value=nutrients.value)
+
+    data %>% .$foodNutrients %>% flatten() %>% as_tibble() %>%
+    select(nutrient.id,nutrient.name,nutrient.unitName,amount) %>%
+    mutate(
+      crop.id = rep(data %>% .$fdcId,
+                    nrow(data %>% .$foodNutrients))
+    )
 }

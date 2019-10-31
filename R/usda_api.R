@@ -12,7 +12,7 @@ usda_api <- function(path){
   require(jsonlite)
   require(xml2)
   
-  url <- modify_url("https://api.nal.usda.gov/fdc/v1",path=path)
+  url <- modify_url("https://api.nal.usda.gov",path=path)
   res <- GET(url)
   jsonlite::fromJSON(content(res, "text"))
 }
